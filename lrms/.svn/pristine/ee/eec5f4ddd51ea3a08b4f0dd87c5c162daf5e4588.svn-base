@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.sunmoon.lrms.lab.LabMapper">
+	<resultMap type="kr.ac.sunmoon.lrms.lab.Lab"
+		id="selectAllResultMap">
+		<result column="NO" property="no" />
+		<result column="ACCEPTABLE_PERSON" property="acceptablePerson" />
+		<result column="AVAILABLE_EQUIP_NO" property="availableEquipNo" />
+		<result column="COMPUTER_SPEC" property="computerSpec" />
+		<result column="USE_PERPOSE" property="usePerpose" />
+		<result column="STATE" property="state" />
+	</resultMap>
+
+	<select id="selectLabAll" resultMap="selectAllResultMap">
+		select NO
+			, ACCEPTABLE_PERSON
+			, AVAILABLE_EQUIP_NO
+			, COMPUTER_SPEC
+			, USE_PERPOSE
+			, STATE
+		from
+			LAB
+	</select>
+
+	<resultMap type="kr.ac.sunmoon.lrms.lab.Lab"
+		id="selectResultMap">
+		<result column="NO" property="no" />
+		<result column="ACCEPTABLE_PERSON" property="acceptablePerson" />
+		<result column="AVAILABLE_EQUIP_NO" property="availableEquipNo" />
+		<result column="COMPUTER_SPEC" property="computerSpec" />
+		<result column="USE_PERPOSE" property="usePerpose" />
+		<result column="STATE" property="state" />
+	</resultMap>
+
+	<select id="selectLab" resultMap="selectResultMap"
+		parameterType="kr.ac.sunmoon.lrms.lab.Lab">
+		select NO
+			, ACCEPTABLE_PERSON
+			, AVAILABLE_EQUIP_NO
+			, COMPUTER_SPEC
+			, USE_PERPOSE
+			, STATE
+		from
+			LAB
+		<if test="no > 0">
+			where NO = #{no}
+		</if>
+	</select>
+
+	<insert id="insertLAb" parameterType="kr.ac.sunmoon.lrms.lab.Lab">
+	
+			
+	</insert>
+
+</mapper>

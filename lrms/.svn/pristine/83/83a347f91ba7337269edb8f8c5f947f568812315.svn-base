@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<a href="/reservation">예약</a>
+	<a href="/lab">실습실</a>
+	<a href="/manager">관리자</a>
+	<a href="/record">예약 이력</a>
+	<a href="/notice">알림</a>
+	${sessionScope.managerInfo.id}
+	<a href="/common/logout"><input type="button" value="로그아웃"></a>
+</body>
+</html>

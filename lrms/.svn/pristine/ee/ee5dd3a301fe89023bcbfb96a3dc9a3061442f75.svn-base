@@ -1,0 +1,10 @@
+package kr.ac.sunmoon.lrms.notice;
+
+import java.util.List;
+
+public interface NoticeMapper {
+	public List<Notice> select(int noticeNo);
+	public void insert(Notice notice);
+	public void update(int noticeNo);
+
+}

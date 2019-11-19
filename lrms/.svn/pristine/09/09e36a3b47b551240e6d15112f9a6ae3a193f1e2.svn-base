@@ -1,0 +1,10 @@
+package kr.ac.sunmoon.lrms.photo;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface PhotoMapper {
+	public Photo select(int photoNo);	 	
+	public void insert(Photo photo);	
+	public void update(Photo photo);     	
+}

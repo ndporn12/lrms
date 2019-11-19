@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<a href="/reservation">예약</a>
+	<a href="/lab">실습실</a>
+	<a href="/manager">관리자</a>
+	<a href="/record">예약 이력</a>
+	${sessionScope.managerInfo.id}
+	<a href="/common/logout"><input type="button" value="로그아웃"></a>
+</body>
+</html>

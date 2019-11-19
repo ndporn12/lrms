@@ -1,0 +1,90 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-3.4.0.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
+	<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script> 
+</head>
+<body>
+	<%@ include file="/WEB-INF/jsp/common/top.jsp"%><br>
+
+	<h1>예약 목록화면</h1>
+	
+	<form id="searchReservation">
+		<table border="1">
+			<tr>
+				<td>장소 <select name="labNo">
+							<c:forEach items="${labs}" var="lab">
+							<option value="${lab.no}">${lab.no}호</option>					
+							</c:forEach>
+						</select> 일자
+						<input type="text" id="startcalender" name="startcalender">
+				</td>
+			</tr>
+		</table>
+	</form>	
+		 <button id="search">검색</button>
+		 <div id ="showSearchReservation"></div>
+	
+	<a href="/reservation/form"><input type="button" value="등록"></a>
+
+	<script>
+	$('#search').on('click', function(){
+      	
+        $.ajax({
+            url: "ajax",
+            type: "POST",
+            data: $('#searchReservation').serialize(),
+            success: function(data){
+            	
+            	html = '<table border =\'1\'>';
+            	html +='<tr>';
+            	html +='	<td>번호</td>';
+            	html +='	<td>실습실</td>';
+            	html +='	<td>예약 시작 시간</td>';
+            	html +='	<td>예약 종료 시간</td>';
+            	html +='	<td>비고</td>';
+            	html +='</tr>';
+            	
+            	if(data == "" ){
+            		html +='<h2>예약된 현황이 없습니다</h2>';
+            	} else{
+            		
+            	for(var i = 0; i < data.length; i++){
+            		html +='<tr>';
+            		html +='<td>' + data[i].rownum + '</td>';
+            		html +='<td><a href=/reservation/' + data[i].no + '>' + data[i].labNo + '</a></td>';
+            		html +='<td>' + data[i].startDate + '</td>';
+            		html +='<td>' + data[i].expiryDate + '</td>';
+            		html +='<td>' + data[i].note + '</td>';
+            		html +='</tr>';          		
+            	}
+            	}
+            	
+            	html +='</table>';  
+                $('#showSearchReservation').html(html);
+                
+            },
+            error: function(){
+                alert("에러");
+            }
+        });
+    });
+	
+	
+	$(function() {
+		$( "#startcalender").datepicker({
+			dateFormat:"yy-mm-dd",
+			showOn:"both",
+			buttonImage:"http://jqueryui.com/resources/demos/datepicker/images/calendar.gif"
+		});
+	});
+		</script>
+</body>
+</html>

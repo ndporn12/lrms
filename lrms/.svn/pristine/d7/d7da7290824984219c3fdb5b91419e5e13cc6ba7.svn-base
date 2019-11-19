@@ -1,0 +1,26 @@
+package kr.ac.sunmoon.lrms.record;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.ac.sunmoon.lrms.reservation.Reservation;
+
+@RestController
+public class RecordController {
+	@Autowired
+	RecordService recordService;
+	
+	@GetMapping(value = "/record")
+	public ModelAndView doRecordSearch() {
+		ModelAndView modelAndView = new ModelAndView("/record/listview");
+		List<Reservation> reservations = recordService.inquiryRecord();
+		
+		modelAndView.addObject("reservations", reservations);
+		
+		return modelAndView;
+	}
+}

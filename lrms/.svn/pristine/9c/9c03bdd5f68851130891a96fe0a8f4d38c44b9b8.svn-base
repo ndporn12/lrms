@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.sunmoon.lrms.reservation.ReservationMapper">
+
+	<select id="selectAllReservation"  resultType="kr.ac.sunmoon.lrms.reservation.Reservation">
+		select 
+				rownum
+				,no
+				,lab_no
+				,manager_id
+				,start_date
+				,expiry_date
+				,registration_date
+				,note,state
+				,pledge 
+		from (select
+                no
+				,lab_no
+				,manager_id
+				,start_date
+				,expiry_date
+				,registration_date
+				,note,state
+				,pledge
+                from reservation
+                order by lab_no)
+        Where pledge = 'A'
+		order by rownum
+		
+	</select>
+	
+	<select id="selectReservation" parameterType="int" resultType="kr.ac.sunmoon.lrms.reservation.Reservation">
+		select      
+             no
+			,lab_no
+			,name
+			,start_date
+			,expiry_date
+			,registration_date
+			,note
+			,reservation.state as state
+			,pledge 
+	 	from reservation, manager 
+		where reservation.manager_id = manager.id and no=#{no}
+	</select>
+	
+	<select id="selectResevationTime" parameterType="kr.ac.sunmoon.lrms.reservation.Reservation" resultType="int">
+		
+		select count(*) 
+			from reservation
+			where lab_no = #{labNo} 
+			and start_date &lt; to_date(#{expiryDate},'yyyymmddhh24mi') 
+			and expiry_date &gt; to_date(#{startDate},'yyyymmddhh24mi')
+	</select>
+	
+	<insert id="insertReservation" parameterType="kr.ac.sunmoon.lrms.reservation.Reservation">
+		insert into Reservation 
+			values(RESERVATION_NO_SEQ.NEXTVAL
+					,#{labNo}
+					,'mgr_001'
+					,to_date(#{startDate},'yyyymmddhh24mi')
+					,to_date(#{expiryDate},'yyyymmddhh24mi')
+					,sysdate
+					,#{note}
+					,'A'
+					,#{pledge}
+					)
+	
+	
+	</insert>
+	<update id="updateReservation" parameterType="kr.ac.sunmoon.lrms.reservation.Reservation">
+		UPDATE RESERVATION 
+		   SET 
+				 LAB_NO = #{labNo}
+				,START_DATE = to_date(#{startDate},'yyyymmddhh24mi')
+				,EXPIRY_DATE = to_date(#{expiryDate},'yyyymmddhh24mi')
+				,NOTE = #{note}
+				,PLEDGE = #{pledge}
+				WHERE NO = #{no}
+	
+	</update>
+	
+	<update id="deleteReservation" parameterType="int">
+		UPDATE RESERVATION
+		   SET PLEDGE='C'
+         WHERE NO =#{NO}
+	</update>
+	
+</mapper>

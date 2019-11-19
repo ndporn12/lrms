@@ -1,0 +1,107 @@
+package kr.ac.sunmoon.lrms.reservation;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+@RestController
+public class ReservationController {
+	@Autowired
+	ReservationServiceImpl reservationImpl;
+
+	
+	//ajax테스트
+	@PostMapping(value = "/ajax")
+	@ResponseBody
+	public String getJsonData(Reservation reservation) {
+		System.out.println(reservation.getLabNo());
+		System.out.println(reservation.getStartcalender());
+		
+		return reservation.getLabNo() + reservation.getStartcalender();
+	}
+	
+	// 예약 목록조회
+	@GetMapping(value = "/reservation")
+	public ModelAndView doReservationListInquiry() {
+		ModelAndView modelAndView = new ModelAndView("/reservation/listview");
+		List<Reservation> reservations = reservationImpl.listReservation();
+
+		modelAndView.addObject("reservations", reservations);
+		return modelAndView;
+	}
+
+	// 예약 조회
+	@GetMapping(value = "/reservation/{no}")
+	public ModelAndView doReservationInquiry(@PathVariable("no") int no) {
+		ModelAndView modelAndView = new ModelAndView("/reservation/inquiryview");
+		Reservation reservation = reservationImpl.inquiryReservation(no);
+
+		modelAndView.addObject("reservation", reservation);
+		return modelAndView;
+	}
+
+	// 예약 등록 폼
+	@GetMapping(value = "/reservation/form")
+	public ModelAndView doReservationAdd() {
+
+		return new ModelAndView("/reservation/addview");
+	}
+
+	// 예약 등록
+	@PostMapping(value = "/reservation")
+	public ModelAndView doReservationAdd(Reservation reservation) {
+		boolean returnValue = reservationImpl.addReservation(reservation);
+		if (returnValue == false) {
+
+			// todo..이미 등록된 예약이 존재합니다 알려주기
+			return new ModelAndView(new RedirectView("/reservation/form"));
+		}
+
+		return new ModelAndView(new RedirectView("/reservation"));
+	}
+
+	// 예약 수정 폼
+	@GetMapping(value = "/reservation/{no}/form")
+	public ModelAndView doReservationEdit(@PathVariable("no") int no) {
+		ModelAndView modelAndView = new ModelAndView("/reservation/editview");
+		Reservation reservation = reservationImpl.inquiryReservation(no);
+
+		modelAndView.addObject("reservation", reservation);
+
+		return modelAndView;
+	}
+
+	// 예약 수정
+	@PutMapping(value = "/reservation")
+	public ModelAndView doReservationEdit(Reservation reservation) {
+		System.out.println(reservation.getNo());
+		boolean returnValue = reservationImpl.updateReservation(reservation);
+
+		if (returnValue == false) {
+
+			// todo..이미 등록된 예약이 존재합니다 알려주기
+			return new ModelAndView(new RedirectView("/reservation/" + reservation.getNo() + "/form"));
+		}
+
+		return new ModelAndView(new RedirectView("/reservation"));
+	}
+
+	// 예약 삭제
+	@DeleteMapping("/reservation")
+	public ModelAndView doReservationCancel(int no) {
+		reservationImpl.cancelReservation(no);
+		System.out.println("통과");
+		return new ModelAndView(new RedirectView("/reservation"));
+	}
+}

@@ -1,0 +1,8 @@
+package kr.ac.sunmoon.lrms.photo;
+
+public interface PhotoService {
+	public Photo getPhoto(int photoNo);	
+	public void addPhoto(Photo photo);		
+	public void editPhoto(Photo photo);		
+
+}

@@ -1,0 +1,11 @@
+package kr.ac.sunmoon.lrms.record;
+
+import java.util.List;
+
+import kr.ac.sunmoon.lrms.reservation.Reservation;
+
+public interface RecordService {
+
+	public List<Reservation> inquiryRecord();
+	
+}

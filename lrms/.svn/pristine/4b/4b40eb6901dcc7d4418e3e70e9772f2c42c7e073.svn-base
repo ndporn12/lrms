@@ -1,0 +1,79 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>선문대학교</title>
+				
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="/css/main.css"/>
+		
+		<script type="text/javascript" src="/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/skel.min.js"></script>
+		<script type="text/javascript" src="/js/util.js"></script>
+		<script type="text/javascript" src="/js/main.js"></script>
+		
+		
+		
+		
+	</head>
+	<body>
+
+			<header id="header">
+				<div class="inner">
+					<a href="index.html" class="logo"><strong>Projection</strong> by TEMPLATED</a>
+					<nav id="nav">
+						<a href="index.html">예약</a>
+						<a href="generic.html">실습실</a>
+						<a href="elements.html">알림</a>
+					</nav>
+					<a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+				</div>
+			</header>
+
+			<section id="banner">
+				<div class="inner">
+					<header>
+						<h1>실습실 예약 관리 시스템</h1>
+					</header>
+
+					<div class="flex ">
+
+						<div>
+							<span class="icon fa-car"></span>
+							<h3>조장:이영성</h3>
+							<p></p>
+						</div>
+
+						<div>
+							<span class="icon fa-camera"></span>
+							<h3>김병수</h3>
+							<p></p>
+						</div>
+
+						<div>
+							<span class="icon fa-bug"></span>
+							<h3>장우성</h3>
+							<p></p>
+						</div>
+
+						</div>
+					<div align="center">	
+					<form method="post" action="/common/login">
+						<input type="text"  name="id" value="" placeholder="아이디" style="width:200px; " />
+						<br>	
+						<input type="password" name="password"  placeholder="비밀번호" style="width:200px;" />
+						<br>
+						<input type="submit" value="로그인" />
+					</form>	
+					</div>
+					<footer>
+						
+					</footer>
+				</div>
+			</section>
+
+	
+	</body>
+</html>
+

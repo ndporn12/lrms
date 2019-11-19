@@ -1,0 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<%@ include file="/WEB-INF/jsp/common/top.jsp" %>
+	<h1>실습실 수정</h1>
+	<form action="/lab" method="POST">
+		<input type="hidden" name="_method" value="put" />
+		<table>
+			<input type="hidden" name="state" value='A'>
+			<tr>
+				<td>호실</td>
+				<td><input type="hidden" name="no" value='${lab.no}'>${lab.no}</td>
+			</tr>
+			<tr>
+				<td>정원</td>
+				<td><input type="text" name="acceptablePerson" size="40" value="${lab.acceptablePerson}"></td>
+			</tr>
+			<tr>
+				<td>장비 수</td>
+				<td><input type="text" name="availableEquipNo" size="40" value="${lab.availableEquipNo}"></td>
+			</tr>
+			<tr>
+				<td>용도</td>
+				<td><input type="text" name="usePerpose" size="40" value="${lab.usePerpose}"></td>
+			</tr>
+			<tr>
+				<td>컴퓨터 사양</td>
+				<td><input type="text" name="computerSpec" size="40" value="${lab.computerSpec}"></td>
+			</tr>
+			<tr>
+				<td>사진</td>
+				<td><input type="file" value="파일 선택" name="file"></td>
+			</tr>
+		</table>
+		</br>
+		<input type="submit" value="수정">
+	</form>
+</body>
+</html>

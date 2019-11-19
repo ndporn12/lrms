@@ -1,0 +1,54 @@
+package kr.ac.sunmoon.lrms.manager;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ManagerServiceImpl implements ManagerService{
+	@Autowired
+	ManagerMapper managerMapper;
+	@Autowired
+	ManagerController managerController;
+	
+	@Override
+	public List<Manager> listManager() {
+		return managerMapper.selectManagerAll();
+	}
+	
+	@Override
+	public void addManager(Manager manager) {
+		//유효값 검사
+		//중복 검사
+		//관리자 등록
+		managerMapper.insertManager(manager);
+	}
+
+	@Override
+	public Manager inquiryManager(String managerId) {
+		Manager managerInfo = managerMapper.selectManager(managerId);
+		return managerInfo;
+	}
+
+	@Override
+	public void editManager(Manager manager) {
+		managerMapper.updateManager(manager);
+	}
+	@Override
+	public void deleteManager(String managerId) {
+		managerMapper.deleteManager(managerId);
+		
+	}
+
+	@Override
+	public boolean isDuplication(String managerId) {
+		//중복을 검사한다.
+		//중복일 경우 false
+		//중복이 아닐경우 true 리턴
+		return false;
+	}
+
+
+
+}

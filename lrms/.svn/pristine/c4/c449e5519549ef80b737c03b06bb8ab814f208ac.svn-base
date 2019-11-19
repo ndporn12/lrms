@@ -1,0 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="/test/upload" method="post" enctype="multipart/form-data">
+    	파일명 : <input type="file" name="multipartFile">
+    <button type="submit">제출하기</button>
+</form>
+</body>
+</html>

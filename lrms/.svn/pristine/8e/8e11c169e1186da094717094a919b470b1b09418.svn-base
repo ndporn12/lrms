@@ -1,0 +1,53 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+	<%@ include file="/WEB-INF/jsp/common/top.jsp" %>
+<h1>관리자 수정</h1>
+		<form action="/manager/${managerInfo.id}" method="POST" id="editForm">
+		<input type="hidden" name="_method" value="put" />
+			<table border="1">
+				<tr>
+					<td>아이디</td>
+					<input type="hidden" name="id" value="${managerInfo.id}" />
+					<td>${managerInfo.id}</td>
+				</tr>
+				<tr>
+					<td>비밀번호</td>
+					<td><input type ="password" name="password"/></td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td><input type="text" name="name"/></td>
+				</tr>
+				<tr>
+					<td>연락처</td>
+					<td><input type ="number" name="extensionNumber"/></td>
+				</tr>
+			</table>
+			<input type="submit" value="수정"/>
+			<button type="button" id="del_btn">삭제</button>
+			<a href="/manager" ><input type="button" value="목록"/></a>
+		</form>
+</body>
+<script>
+	$(document).ready(function(){
+		$("#del_btn").click(function(){
+			$('input[name=_method]').val('delete');
+			confirm('정말로 삭제 하시겠습니까?');
+			$("#editForm").submit();
+		});
+	});
+</script>
+</html>

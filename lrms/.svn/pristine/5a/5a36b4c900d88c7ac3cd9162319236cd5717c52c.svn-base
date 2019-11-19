@@ -1,0 +1,25 @@
+package kr.ac.sunmoon.lrms.photo;
+
+public class PhotoServiceImpl implements PhotoService {
+	@Override
+	public Photo getPhoto(int photoNo) {
+		// 1. 사진을 불러온다.
+		return null;
+	}
+
+	@Override
+	public void addPhoto(Photo photo) {
+		// 1. 입력받은 정보가 유효한지판단한다.
+		
+		// 2. 사진 등록을 한다.
+	
+	}
+
+	@Override
+	public void editPhoto(Photo photo) {
+		// 1. 입력받은 정보가 유효한지판단한다.
+		
+		// 2. 사진 수정을 한다.
+	}
+
+}

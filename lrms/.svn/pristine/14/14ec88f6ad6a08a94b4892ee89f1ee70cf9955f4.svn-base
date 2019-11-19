@@ -1,0 +1,150 @@
+package kr.ac.sunmoon.lrms.lab;
+
+import java.io.File;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import kr.ac.sunmoon.lrms.photo.Photo;
+import kr.ac.sunmoon.lrms.photo.PhotoMapper;
+
+@Service
+public class LabServiceImpl implements LabService {
+	@Autowired
+	private LabMapper labMapper;
+
+	@Autowired
+	private PhotoMapper photoMapper;
+
+	@Override
+	public List<Lab> listLab() {
+		// 1. 실습실 목록 조회를 한다.
+		List<Lab> list = this.labMapper.selectLabAll();
+		return list;
+	}
+
+	@Override
+	public Lab inquiryLab(int labNo) {
+		Lab lab;
+		// 1. 실습실 조회를 한다.
+		lab = this.labMapper.selectLab(labNo);
+		
+//		// 2. 사진을 조회한다.
+//		Photo photo = this.photoMapper.selectPhoto("PHOTO"+labNo);
+//		if (photo == null) {
+//			System.out.println("사진이 없습니다.");
+//		}
+		return lab;
+	}
+
+	@Override
+	public void addLab(Lab lab, MultipartFile multipartFile) {
+		Photo photo = new Photo();
+		// 1. 입력받은 정보가 유효한가?
+
+		// 2. 실습실 조회를 한다.
+		Lab oldLab = this.labMapper.selectLab(lab.getNo());
+
+		// 3. 정보가 존하지않는가?
+		if (oldLab == null) {
+			this.labMapper.insertLab(lab);
+
+			// 5-1. 실습실 사진이 등록 되었는가?
+			if (!"".equals(multipartFile.getOriginalFilename())) {
+				// 6-1. 입력 받은 정보가 유효한가?
+				
+				// 7-1. 사진 등록을 한다.
+				System.out.println("사진 등록을 한다.");
+
+				String logicName = multipartFile.getOriginalFilename();
+				String phsicalName = String.valueOf(System.nanoTime());
+
+				String path = "C:\\Users\\sunmoon\\Desktop";
+				String savePath = path + "//" + phsicalName + "_" + logicName;
+
+				photo.setLabNo(lab.getNo());
+				photo.setLogicalFileName(logicName);
+				photo.setPath(path);
+				photo.setPhysicalFileName(phsicalName);
+				photo.setNo("PHOTO" + lab.getNo());
+
+				try {
+					multipartFile.transferTo(new File(savePath));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				// 사진 등록
+				this.photoMapper.insertPhoto(photo);
+			}
+
+		} else {
+			if ("C".equals(oldLab.getState())) {
+				// 5-2. 실습실 수정을 한다. (삭제된 실습실을 신규 실습실로 변경)
+				this.labMapper.updateLab(lab);
+//
+//				// 5-2. 실습실 사진이 등록 되었는가?
+//				if (!"".equals(multipartFile.getOriginalFilename())) {
+//					// 6-1. 입력 받은 정보가 유효한가?
+//					// 7-1. 사진 등록을 한다.
+//					System.out.println("사진 등록을 한다.");
+//
+//					String logicName = multipartFile.getOriginalFilename();
+//					String phsicalName = String.valueOf(System.nanoTime());
+//
+//					String path = "C:\\Users\\sunmoon\\Desktop";
+//					String savePath = path + "//" + phsicalName + "_" + logicName;
+//
+//					photo.setLabNo(lab.getNo());
+//					photo.setLogicalFileName(logicName);
+//					photo.setPath(path);
+//					photo.setPhysicalFileName(phsicalName);
+//					photo.setNo("PHOTO" + lab.getNo());
+//
+//					try {
+//						multipartFile.transferTo(new File(savePath));
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//					// 사진 등록
+//					this.photoMapper.insertPhoto(photo);
+//				}
+//
+//				// 6-2. 입력 받은 정보가 유효한가?
+//
+//				// 7-2. 실습실 사진이 기존에 존재하는가?
+			}
+
+		}
+	}
+
+	@Override
+	public void editLab(Lab lab) {
+		// 1. 입력받은 정보가 유효한가?
+
+		// 2. 실습실 조회를 한다.
+		System.out.println("실습실 수정");
+			// 3. 실습실 수정을 한다.
+			this.labMapper.updateLab(lab);
+
+			// 4. 실습실 사진이 등록 되어 있는가?
+			// 5. 입력받은 정보가 유효한가?
+			// 6. 사진 수정을 한다.
+		}
+
+	@Override
+	public void deleteLab(int labNo) {
+		// 1. 실습실 조회를 한다.
+		Lab lab = this.labMapper.selectLab(labNo);
+
+		// 2. 데이터가 존재하는가?
+		if (lab != null) {
+			// 3. 실습실 상태값을 C로 변경한다.
+			this.labMapper.deleteLab(labNo);
+			// 사진이 존재하는가?
+			if (this.photoMapper.selectPhoto("PHOTO" + lab.getNo()) != null) {
+				this.photoMapper.deletePhoto("PHOTO" + lab.getNo());
+			}
+		}
+	}
+}

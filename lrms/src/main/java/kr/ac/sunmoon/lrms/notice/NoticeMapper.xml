@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.sunmoon.lrms.notice.NoticeMapper"> 
+	<select id ="selectNoticeAll" resultType="kr.ac.sunmoon.lrms.notice.Notice">
+		SELECT N.NO as noticeNo
+      		  ,R.NO as reservationNo
+       		  ,N.CHECK_STATE as checkState
+    		  ,R.REGISTRATION_DATE as registrationDate
+    		  ,M.NAME as name
+   			  ,R.STATE as reservationState
+ 	          ,R.START_DATE as startDate
+      		  ,R.EXPIRY_DATE as expiryDate
+     		  ,R.LAB_NO as labNo
+		FROM NOTICE N , RESERVATION R, MANAGER M
+		WHERE N.RESERVATION_NO = R.NO AND N.CHECK_STATE='N'  AND M.ID = R.MANAGER_ID
+	
+	</select>
+	
+	<insert id="insertNotice" parameterType="kr.ac.sunmoon.lrms.reservation.Reservation">
+		INSERT INTO NOTICE 
+		VALUES(NOTICE_NO_SEQ.NEXTVAL,#{no},#{state},'N')
+	
+	</insert>
+
+	<update id="updateNotice">
+		UPDATE NOTICE
+		SET    CHECK_STATE = 'Y'
+		WHERE  CHECK_STATE = 'N'
+	</update>
+</mapper>

@@ -1,0 +1,15 @@
+package kr.ac.sunmoon.lrms.notice;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class NoticeServiceImpl implements NoticeService{
+
+	@Override
+	public List<Notice> inquiryNotice() {
+		return null;
+	}
+
+}

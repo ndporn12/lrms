@@ -1,0 +1,13 @@
+package kr.ac.sunmoon.lrms.notice;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface NoticeMapper {
+	public List<Notice> select(int noticeNo);
+	public void insert(Notice notice);
+	public void update(int noticeNo);
+
+}
